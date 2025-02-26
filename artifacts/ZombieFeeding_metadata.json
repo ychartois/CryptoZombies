@@ -1,0 +1,152 @@
+{
+	"compiler": {
+		"version": "0.5.17+commit.d19bba13"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "zombieId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "dna",
+						"type": "uint256"
+					}
+				],
+				"name": "NewZombie",
+				"type": "event"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "_name",
+						"type": "string"
+					}
+				],
+				"name": "createRandomZombie",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_targetDna",
+						"type": "uint256"
+					}
+				],
+				"name": "feedAndMultiply",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "zombieToOwner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "zombies",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "dna",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"methods": {}
+		},
+		"userdoc": {
+			"methods": {}
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"ZombieFeeding.sol": "ZombieFeeding"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"ZombieFactory.sol": {
+			"keccak256": "0xa14d81c17f33c51af77220cfa4001d46462a90dc6ded327b650e8f08c8a1a57b",
+			"urls": [
+				"bzz-raw://4dc2d5380d620132c955cf32bf53a9516fe43ba0c7ab428ac64db322eaf294c8",
+				"dweb:/ipfs/QmereqvjhvKFy6K7DXyqEh99Uwtj9VikrrNynAKUABpdy2"
+			]
+		},
+		"ZombieFeeding.sol": {
+			"keccak256": "0x68a15c7854af2acb533e212e733347fa56e9479cfa43fc7fbd7e954a1a153879",
+			"urls": [
+				"bzz-raw://0e0ed1f8c63a5925fa6d2f91331363fd10e1a8f75da4f6a7c93847a24fe03163",
+				"dweb:/ipfs/QmTix81AFHCyfegAXnv1AQ149zaNMfyrmRjj8qS5EgrEpx"
+			]
+		}
+	},
+	"version": 1
+}
