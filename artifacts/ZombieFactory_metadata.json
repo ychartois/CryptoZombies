@@ -114,10 +114,10 @@
 	},
 	"sources": {
 		"ZombieFactory.sol": {
-			"keccak256": "0xa14d81c17f33c51af77220cfa4001d46462a90dc6ded327b650e8f08c8a1a57b",
+			"keccak256": "0xc61c965e6b5ceba19d518f413a90a9abae4401e9564ee5ec5de49709c34b693e",
 			"urls": [
-				"bzz-raw://4dc2d5380d620132c955cf32bf53a9516fe43ba0c7ab428ac64db322eaf294c8",
-				"dweb:/ipfs/QmereqvjhvKFy6K7DXyqEh99Uwtj9VikrrNynAKUABpdy2"
+				"bzz-raw://a2cf8a05f0a2d621d247eda503c9bf4ae1ce24cf9a6ef0c39427ee5907d89ce6",
+				"dweb:/ipfs/QmapTQH32XxxCdHeg9mDcGfG8MDH8KY3LjSLEM6qkKWA4U"
 			]
 		}
 	},
