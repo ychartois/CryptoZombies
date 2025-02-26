@@ -6,29 +6,10 @@
 	"output": {
 		"abi": [
 			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "zombieId",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "dna",
-						"type": "uint256"
-					}
-				],
-				"name": "NewZombie",
-				"type": "event"
+				"inputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor"
 			},
 			{
 				"anonymous": false,
@@ -48,21 +29,6 @@
 				],
 				"name": "OwnershipTransferred",
 				"type": "event"
-			},
-			{
-				"constant": false,
-				"inputs": [
-					{
-						"internalType": "string",
-						"name": "_name",
-						"type": "string"
-					}
-				],
-				"name": "createRandomZombie",
-				"outputs": [],
-				"payable": false,
-				"stateMutability": "nonpayable",
-				"type": "function"
 			},
 			{
 				"constant": true,
@@ -117,57 +83,14 @@
 				"payable": false,
 				"stateMutability": "nonpayable",
 				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "zombieToOwner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"constant": true,
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"name": "zombies",
-				"outputs": [
-					{
-						"internalType": "string",
-						"name": "name",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "dna",
-						"type": "uint256"
-					}
-				],
-				"payable": false,
-				"stateMutability": "view",
-				"type": "function"
 			}
 		],
 		"devdoc": {
+			"details": "The Ownable contract has an owner address, and provides basic authorization control functions, this simplifies the implementation of \"user permissions\".",
 			"methods": {
+				"constructor": {
+					"details": "The Ownable constructor sets the original `owner` of the contract to the sender account."
+				},
 				"isOwner()": {
 					"return": "true if `msg.sender` is the owner of the contract."
 				},
@@ -183,7 +106,8 @@
 						"newOwner": "The address to transfer ownership to."
 					}
 				}
-			}
+			},
+			"title": "Ownable"
 		},
 		"userdoc": {
 			"methods": {
@@ -195,7 +119,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"ZombieFactory.sol": "ZombieFactory"
+			"ownable.sol": "Ownable"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -206,13 +130,6 @@
 		"remappings": []
 	},
 	"sources": {
-		"ZombieFactory.sol": {
-			"keccak256": "0xd5df47d23f0e43b47156432b8bf1b80b6516b12c4f4132cd8fd42ff8676daf03",
-			"urls": [
-				"bzz-raw://d7bd9426d959c9b7ed6cae7b6873950a1cf83a43d6eaaa919ea968995a97a2a9",
-				"dweb:/ipfs/QmdZTFpErTBGrg6cMuTWEmwv5gjVggZURSzW1JLEPYMpe8"
-			]
-		},
 		"ownable.sol": {
 			"keccak256": "0x6694abc0baa785b7f264982aa07d5fb7a13dab9e4e50e7710ecdbf1e72b4d022",
 			"urls": [
