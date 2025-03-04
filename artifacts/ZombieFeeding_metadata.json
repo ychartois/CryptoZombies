@@ -31,6 +31,25 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
 				"constant": false,
 				"inputs": [
 					{
@@ -55,11 +74,80 @@
 					},
 					{
 						"internalType": "uint256",
-						"name": "_targetDna",
+						"name": "_kittyId",
 						"type": "uint256"
 					}
 				],
-				"name": "feedAndMultiply",
+				"name": "feedOnKitty",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "isOwner",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_address",
+						"type": "address"
+					}
+				],
+				"name": "setKittyContractAddress",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -106,6 +194,16 @@
 						"internalType": "uint256",
 						"name": "dna",
 						"type": "uint256"
+					},
+					{
+						"internalType": "uint32",
+						"name": "level",
+						"type": "uint32"
+					},
+					{
+						"internalType": "uint32",
+						"name": "readyTime",
+						"type": "uint32"
 					}
 				],
 				"payable": false,
@@ -114,15 +212,35 @@
 			}
 		],
 		"devdoc": {
-			"methods": {}
+			"methods": {
+				"isOwner()": {
+					"return": "true if `msg.sender` is the owner of the contract."
+				},
+				"owner()": {
+					"return": "the address of the owner."
+				},
+				"renounceOwnership()": {
+					"details": "Allows the current owner to relinquish control of the contract."
+				},
+				"transferOwnership(address)": {
+					"details": "Allows the current owner to transfer control of the contract to a newOwner.",
+					"params": {
+						"newOwner": "The address to transfer ownership to."
+					}
+				}
+			}
 		},
 		"userdoc": {
-			"methods": {}
+			"methods": {
+				"renounceOwnership()": {
+					"notice": "Renouncing to ownership will leave the contract without an owner. It will not be possible to call the functions with the `onlyOwner` modifier anymore."
+				}
+			}
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"ZombieFeeding.sol": "ZombieFeeding"
+			"zombiefeeding.sol": "ZombieFeeding"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -133,18 +251,25 @@
 		"remappings": []
 	},
 	"sources": {
-		"ZombieFactory.sol": {
-			"keccak256": "0xa14d81c17f33c51af77220cfa4001d46462a90dc6ded327b650e8f08c8a1a57b",
+		"ownable.sol": {
+			"keccak256": "0x6694abc0baa785b7f264982aa07d5fb7a13dab9e4e50e7710ecdbf1e72b4d022",
 			"urls": [
-				"bzz-raw://4dc2d5380d620132c955cf32bf53a9516fe43ba0c7ab428ac64db322eaf294c8",
-				"dweb:/ipfs/QmereqvjhvKFy6K7DXyqEh99Uwtj9VikrrNynAKUABpdy2"
+				"bzz-raw://070fd800b9e6d326c14e755b1f4cd6b2a2ea4eaee3d6c448f24ebba77576b115",
+				"dweb:/ipfs/QmV1mqW7ejRvXjyCGAcDmofzuot77fWMRXjGsKNXSvGbzn"
 			]
 		},
-		"ZombieFeeding.sol": {
-			"keccak256": "0x905e54cc7f50e7bb9d330bec9a3c9994643a6f3fdfe6103d74a108f3e6f24591",
+		"zombiefactory.sol": {
+			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
 			"urls": [
-				"bzz-raw://2d16f946a641ffd1bcca420c9bf1dab9da0a2a223e96dc379da3f2b1e7c62a6f",
-				"dweb:/ipfs/QmT2WrR1EV4cHYpVY2Z3g6JyTzMashHQ8cu1z4vqsqpEnT"
+				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
+				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
+			]
+		},
+		"zombiefeeding.sol": {
+			"keccak256": "0x87ab6177f0abdcc37c25d34a4b8f1439c35afc16a224e6b3877eaae49f90d957",
+			"urls": [
+				"bzz-raw://091239bae0e14c51ce444251b6a9fd28b70b60af1b274444572231e9659d1b91",
+				"dweb:/ipfs/QmX6w6cxW3xKjPBYv1nSJuEVHqb4TKp2hNELgCmiWRkd9r"
 			]
 		}
 	},

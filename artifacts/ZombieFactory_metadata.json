@@ -205,7 +205,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"ZombieFactory.sol": "ZombieFactory"
+			"zombiefactory.sol": "ZombieFactory"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -216,18 +216,18 @@
 		"remappings": []
 	},
 	"sources": {
-		"ZombieFactory.sol": {
-			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
-			"urls": [
-				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
-				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
-			]
-		},
 		"ownable.sol": {
 			"keccak256": "0x6694abc0baa785b7f264982aa07d5fb7a13dab9e4e50e7710ecdbf1e72b4d022",
 			"urls": [
 				"bzz-raw://070fd800b9e6d326c14e755b1f4cd6b2a2ea4eaee3d6c448f24ebba77576b115",
 				"dweb:/ipfs/QmV1mqW7ejRvXjyCGAcDmofzuot77fWMRXjGsKNXSvGbzn"
+			]
+		},
+		"zombiefactory.sol": {
+			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
+			"urls": [
+				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
+				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
 			]
 		}
 	},

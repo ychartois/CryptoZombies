@@ -312,20 +312,6 @@
 		"remappings": []
 	},
 	"sources": {
-		"ZombieFactory.sol": {
-			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
-			"urls": [
-				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
-				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
-			]
-		},
-		"ZombieFeeding.sol": {
-			"keccak256": "0x26fde0932c16c1add93b0ff3ea435d1b961b496df3f88596e7b1e96aaf1b832e",
-			"urls": [
-				"bzz-raw://53433fb5588d8290fb02302b9d8b13aadee2625e73a3913ba4f4b995cc5cbaef",
-				"dweb:/ipfs/QmWomxPm9wf7ai7dQ5fjW2xYVEswDr1BYV3iHTSzuwKNhY"
-			]
-		},
 		"ownable.sol": {
 			"keccak256": "0x6694abc0baa785b7f264982aa07d5fb7a13dab9e4e50e7710ecdbf1e72b4d022",
 			"urls": [
@@ -333,11 +319,25 @@
 				"dweb:/ipfs/QmV1mqW7ejRvXjyCGAcDmofzuot77fWMRXjGsKNXSvGbzn"
 			]
 		},
-		"zombiehelper.sol": {
-			"keccak256": "0xdd2e97011be8790dcfac1519c9046379fbd365645c2205bf48cce6db00d76359",
+		"zombiefactory.sol": {
+			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
 			"urls": [
-				"bzz-raw://679499018b9f9711438cec3759cd5e0ea00747aaad7786a30f4293352dee9709",
-				"dweb:/ipfs/QmSisY4WaPNVtExarEwB9HpbjtcyMHnAPcGY7NpAkHsbtN"
+				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
+				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
+			]
+		},
+		"zombiefeeding.sol": {
+			"keccak256": "0x87ab6177f0abdcc37c25d34a4b8f1439c35afc16a224e6b3877eaae49f90d957",
+			"urls": [
+				"bzz-raw://091239bae0e14c51ce444251b6a9fd28b70b60af1b274444572231e9659d1b91",
+				"dweb:/ipfs/QmX6w6cxW3xKjPBYv1nSJuEVHqb4TKp2hNELgCmiWRkd9r"
+			]
+		},
+		"zombiehelper.sol": {
+			"keccak256": "0x5b46979ae3015f712fc882a1caca2922573c30e830bc9f5f115b8b5b279b9d62",
+			"urls": [
+				"bzz-raw://2560bf8a956c376dd45ddbc7b3707372d71c71eb63af205e267086165206b8c3",
+				"dweb:/ipfs/QmWV6NiqrUm4E5nTPQvFpXHhoSRm9FrNXQJsvYxYGGHRQc"
 			]
 		}
 	},
