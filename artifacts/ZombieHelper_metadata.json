@@ -161,6 +161,21 @@
 				"type": "function"
 			},
 			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					}
+				],
+				"name": "levelUp",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"constant": true,
 				"inputs": [],
 				"name": "owner",
@@ -203,12 +218,36 @@
 				"constant": false,
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "_fee",
+						"type": "uint256"
+					}
+				],
+				"name": "setLevelUpFee",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "newOwner",
 						"type": "address"
 					}
 				],
 				"name": "transferOwnership",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "withdraw",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -334,10 +373,10 @@
 			]
 		},
 		"zombiehelper.sol": {
-			"keccak256": "0x5b46979ae3015f712fc882a1caca2922573c30e830bc9f5f115b8b5b279b9d62",
+			"keccak256": "0x26c0497fdbc42a525d48e33235d3d2c430a5a52325d5c1381fa5fccd38186dee",
 			"urls": [
-				"bzz-raw://2560bf8a956c376dd45ddbc7b3707372d71c71eb63af205e267086165206b8c3",
-				"dweb:/ipfs/QmWV6NiqrUm4E5nTPQvFpXHhoSRm9FrNXQJsvYxYGGHRQc"
+				"bzz-raw://4f564659d5d3aa36ab4b386ee1c60998525e2d4207373ee99ff728c54633d957",
+				"dweb:/ipfs/QmWDs9nsHDoFf8bxATmJbzeLJS4chvAoWWApshoZ5wrJF2"
 			]
 		}
 	},
