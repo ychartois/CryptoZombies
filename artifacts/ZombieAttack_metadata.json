@@ -59,6 +59,26 @@
 					},
 					{
 						"internalType": "uint256",
+						"name": "_targetId",
+						"type": "uint256"
+					}
+				],
+				"name": "attack",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
 						"name": "_newDna",
 						"type": "uint256"
 					}
@@ -359,10 +379,10 @@
 			]
 		},
 		"zombieattack.sol": {
-			"keccak256": "0xffa0a25e58a9d9d9385a1497a23d604553899e91e3a6d6c048f8ad2759026ab3",
+			"keccak256": "0x2ac49d7a29292d602c9bd79c6e5d490141f584a4e06c98c8cdc01f1a4d8749b8",
 			"urls": [
-				"bzz-raw://fc2e33b317c68248db0984561550c52f37774c4d8c144bbcb10b4b7a56daabf1",
-				"dweb:/ipfs/QmWxeBevePwkkyagKGNWqRdCYZnK6UJ42oaQPmaHwoKKAc"
+				"bzz-raw://759e840c250d40d25febd859facce3294704b5ff5620df149f43b915abd4f1aa",
+				"dweb:/ipfs/Qmc8FHBgWT934c5v4LYoYC3DEu8nGV7PzDVprQkP4qrxWZ"
 			]
 		},
 		"zombiefactory.sol": {

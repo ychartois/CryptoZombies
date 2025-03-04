@@ -107,10 +107,10 @@
 			]
 		},
 		"zombiefeeding.sol": {
-			"keccak256": "0x87ab6177f0abdcc37c25d34a4b8f1439c35afc16a224e6b3877eaae49f90d957",
+			"keccak256": "0x1eba8d2ea6a71aab61261798b43e935eec4778252803bb127ccf8185213bed92",
 			"urls": [
-				"bzz-raw://091239bae0e14c51ce444251b6a9fd28b70b60af1b274444572231e9659d1b91",
-				"dweb:/ipfs/QmX6w6cxW3xKjPBYv1nSJuEVHqb4TKp2hNELgCmiWRkd9r"
+				"bzz-raw://d405b4856f388966a094d35fba9f33198327cc1801c15d4ed99d07aead596f73",
+				"dweb:/ipfs/QmYu7T3mRCuHWi6zu7YwdHxeYH3UuWg1CDd65mZgTWnB59"
 			]
 		}
 	},
