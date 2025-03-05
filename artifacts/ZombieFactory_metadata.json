@@ -169,6 +169,16 @@
 						"internalType": "uint32",
 						"name": "readyTime",
 						"type": "uint32"
+					},
+					{
+						"internalType": "uint16",
+						"name": "winCount",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint16",
+						"name": "lossCount",
+						"type": "uint16"
 					}
 				],
 				"payable": false,
@@ -224,10 +234,10 @@
 			]
 		},
 		"zombiefactory.sol": {
-			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
+			"keccak256": "0xcfbcd739309b5ed7abf3ec041bd97493672ed8c5cbb325287a25b69bb8b234aa",
 			"urls": [
-				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
-				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
+				"bzz-raw://cf41690e442eb40044486ca77f6760981f280e77a28ddcb6aed1719ca0e053fb",
+				"dweb:/ipfs/QmeiJeeEhYEf25hT4HyXLqf9ztZqeZvzegZy6rMYufK8xw"
 			]
 		}
 	},

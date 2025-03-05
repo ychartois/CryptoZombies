@@ -324,6 +324,16 @@
 						"internalType": "uint32",
 						"name": "readyTime",
 						"type": "uint32"
+					},
+					{
+						"internalType": "uint16",
+						"name": "winCount",
+						"type": "uint16"
+					},
+					{
+						"internalType": "uint16",
+						"name": "lossCount",
+						"type": "uint16"
 					}
 				],
 				"payable": false,
@@ -379,31 +389,31 @@
 			]
 		},
 		"zombieattack.sol": {
-			"keccak256": "0x2ac49d7a29292d602c9bd79c6e5d490141f584a4e06c98c8cdc01f1a4d8749b8",
+			"keccak256": "0x917a97e5797b782115300e3a97461c90d36b222841026ce31b1e495cd8405224",
 			"urls": [
-				"bzz-raw://759e840c250d40d25febd859facce3294704b5ff5620df149f43b915abd4f1aa",
-				"dweb:/ipfs/Qmc8FHBgWT934c5v4LYoYC3DEu8nGV7PzDVprQkP4qrxWZ"
+				"bzz-raw://a3a412ecfa4ffc30e5d3797c80d07805ea4c403a00ded4180e8753e57e037e4c",
+				"dweb:/ipfs/QmcMGcj4qxRP36yCiyf1PtEK6xFTbSWH6RiEmKaqiDNdua"
 			]
 		},
 		"zombiefactory.sol": {
-			"keccak256": "0xa5bdc300e4289bb2fdfaa1eedd44a045595480c159b8eb8953947911b0731123",
+			"keccak256": "0xcfbcd739309b5ed7abf3ec041bd97493672ed8c5cbb325287a25b69bb8b234aa",
 			"urls": [
-				"bzz-raw://5e5c48681583dc35aea1eb1804b5ae4fd2418d8dbd25935b89c0636045f478e0",
-				"dweb:/ipfs/QmUwE9rbk8adtdE4M56exVGgWDNfAkkbBVLjGop9vs1LEr"
+				"bzz-raw://cf41690e442eb40044486ca77f6760981f280e77a28ddcb6aed1719ca0e053fb",
+				"dweb:/ipfs/QmeiJeeEhYEf25hT4HyXLqf9ztZqeZvzegZy6rMYufK8xw"
 			]
 		},
 		"zombiefeeding.sol": {
-			"keccak256": "0x87ab6177f0abdcc37c25d34a4b8f1439c35afc16a224e6b3877eaae49f90d957",
+			"keccak256": "0x5b782f002e410f5c26d1e84d84c5b01c9b2537c85c1b2561e90ee21fc4a62dea",
 			"urls": [
-				"bzz-raw://091239bae0e14c51ce444251b6a9fd28b70b60af1b274444572231e9659d1b91",
-				"dweb:/ipfs/QmX6w6cxW3xKjPBYv1nSJuEVHqb4TKp2hNELgCmiWRkd9r"
+				"bzz-raw://22d0654cc4b97bc56dd45b9ad7749e4941ab798d2148e1ef74fca60ac4c48cfc",
+				"dweb:/ipfs/QmSDcJy6eA78h6sQPMMnwk8ZCBVRvBhU4dVSkqLwSGRMHU"
 			]
 		},
 		"zombiehelper.sol": {
-			"keccak256": "0x26c0497fdbc42a525d48e33235d3d2c430a5a52325d5c1381fa5fccd38186dee",
+			"keccak256": "0x2b4baf05fcac51b927e99f10823008552eb7c0ec026b090786797336c4eec341",
 			"urls": [
-				"bzz-raw://4f564659d5d3aa36ab4b386ee1c60998525e2d4207373ee99ff728c54633d957",
-				"dweb:/ipfs/QmWDs9nsHDoFf8bxATmJbzeLJS4chvAoWWApshoZ5wrJF2"
+				"bzz-raw://45cad6f1b39e2ce258cd4d71c970d84f9da58e2b86ed235b9986044f45c34c0c",
+				"dweb:/ipfs/QmZgPKhGBo53CtzMJBNnyHW3NG2NPRPPq26uaeea9t9uVd"
 			]
 		}
 	},
