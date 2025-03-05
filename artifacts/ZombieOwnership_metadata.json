@@ -53,6 +53,66 @@
 				"constant": false,
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_targetId",
+						"type": "uint256"
+					}
+				],
+				"name": "attack",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_newDna",
+						"type": "uint256"
+					}
+				],
+				"name": "changeDna",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "_newName",
+						"type": "string"
+					}
+				],
+				"name": "changeName",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
 						"internalType": "string",
 						"name": "_name",
 						"type": "string"
@@ -86,6 +146,27 @@
 			},
 			{
 				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "getZombiesByOwner",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "",
+						"type": "uint256[]"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": true,
 				"inputs": [],
 				"name": "isOwner",
 				"outputs": [
@@ -97,6 +178,21 @@
 				],
 				"payable": false,
 				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_zombieId",
+						"type": "uint256"
+					}
+				],
+				"name": "levelUp",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -142,12 +238,36 @@
 				"constant": false,
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "_fee",
+						"type": "uint256"
+					}
+				],
+				"name": "setLevelUpFee",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
 						"internalType": "address",
 						"name": "newOwner",
 						"type": "address"
 					}
 				],
 				"name": "transferOwnership",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [],
+				"name": "withdraw",
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
@@ -250,7 +370,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"zombiefeeding.sol": "ZombieFeeding"
+			"zombieownership.sol": "ZombieOwnership"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -268,6 +388,13 @@
 				"dweb:/ipfs/QmV1mqW7ejRvXjyCGAcDmofzuot77fWMRXjGsKNXSvGbzn"
 			]
 		},
+		"zombieattack.sol": {
+			"keccak256": "0xa646048eb4842b77aac65d48c01dd95cbc4c5783c4f292349abf0a046769bfcf",
+			"urls": [
+				"bzz-raw://523e001ac472294ac41939c5d16e6ec18cec39cdfc08379f962c69778f711c78",
+				"dweb:/ipfs/Qme4zj4Ub43wsBzXhE7avQWHxXtJ754odFRFKsbwUm9VFy"
+			]
+		},
 		"zombiefactory.sol": {
 			"keccak256": "0xcfbcd739309b5ed7abf3ec041bd97493672ed8c5cbb325287a25b69bb8b234aa",
 			"urls": [
@@ -276,10 +403,24 @@
 			]
 		},
 		"zombiefeeding.sol": {
-			"keccak256": "0x94ef2af162f72446f5f0a90b19e4aa5225561304b821c4677b7c941756e62278",
+			"keccak256": "0x5b782f002e410f5c26d1e84d84c5b01c9b2537c85c1b2561e90ee21fc4a62dea",
 			"urls": [
-				"bzz-raw://e061fb82ac0177174044471a32568aa205ba5e8e47b3c28cb8a586bf1a34ba80",
-				"dweb:/ipfs/QmT9J9Necxah58jEGUVUvjjk9L92N5zzPJDQUVGpBqFmfC"
+				"bzz-raw://22d0654cc4b97bc56dd45b9ad7749e4941ab798d2148e1ef74fca60ac4c48cfc",
+				"dweb:/ipfs/QmSDcJy6eA78h6sQPMMnwk8ZCBVRvBhU4dVSkqLwSGRMHU"
+			]
+		},
+		"zombiehelper.sol": {
+			"keccak256": "0x2b4baf05fcac51b927e99f10823008552eb7c0ec026b090786797336c4eec341",
+			"urls": [
+				"bzz-raw://45cad6f1b39e2ce258cd4d71c970d84f9da58e2b86ed235b9986044f45c34c0c",
+				"dweb:/ipfs/QmZgPKhGBo53CtzMJBNnyHW3NG2NPRPPq26uaeea9t9uVd"
+			]
+		},
+		"zombieownership.sol": {
+			"keccak256": "0xcabcaf05d0ca19a30fede095ed3a7c164adffd30ac5d465d23a8adbf3d12c058",
+			"urls": [
+				"bzz-raw://538e3d6f0d7f4560eb94abb64eca2946324c3a4d1ff296a45ba388d26abc2238",
+				"dweb:/ipfs/QmX1kFsYkW4LEDz2a4jUEZ2Q47gvLW1bf1jyUqzozqDKgU"
 			]
 		}
 	},
