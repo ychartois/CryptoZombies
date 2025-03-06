@@ -234,17 +234,17 @@
 			]
 		},
 		"safemath.sol": {
-			"keccak256": "0x827b1dd9cab9f22f974484879764d55e117f1454d85059aa39db26f76c8ec4fe",
+			"keccak256": "0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c",
 			"urls": [
-				"bzz-raw://daae26c77a04f96f7351312134480a21cbeb2358f5a8be3ab79f5f9ec5f82d40",
-				"dweb:/ipfs/QmSbqKsPG3ffxFP4knQywsXmk3CEjF4LFSnaQ9CtYqUPSb"
+				"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae",
+				"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51"
 			]
 		},
 		"zombiefactory.sol": {
-			"keccak256": "0x60532404e7092144397e17e0771c55b9de76079705e2248b28e1ffe62ac349e3",
+			"keccak256": "0x4b716f84eb65771b6519481af7a5abfe06942e9b06e0fd6a294c9a913fa047c6",
 			"urls": [
-				"bzz-raw://df9daa3442de78eddd2c6e98921d5f5e87f6cd93773b36f1d04dd2d9b8039282",
-				"dweb:/ipfs/QmbPnMcnR7usuVbxBrJZv9banA5SCNRaVa98dELRNSVPaP"
+				"bzz-raw://bae2bef75f1e0a9461fc2aaba570baa5850b80a3c57281346ab685b3bdf0cb28",
+				"dweb:/ipfs/QmW4sgpErqDoQxTX3MiRWHHRERNRpKEDgATyAZiQ6pqYqw"
 			]
 		}
 	},

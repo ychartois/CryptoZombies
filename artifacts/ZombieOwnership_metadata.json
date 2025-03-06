@@ -9,6 +9,31 @@
 				"anonymous": false,
 				"inputs": [
 					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_approved",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "Approval",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
 						"indexed": false,
 						"internalType": "uint256",
 						"name": "zombieId",
@@ -50,6 +75,51 @@
 				"type": "event"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "Transfer",
+				"type": "event"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_approved",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "approve",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
 				"constant": false,
 				"inputs": [
 					{
@@ -67,6 +137,27 @@
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "balanceOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -211,6 +302,27 @@
 				"type": "function"
 			},
 			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "ownerOf",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"constant": false,
 				"inputs": [],
 				"name": "renounceOwnership",
@@ -247,6 +359,31 @@
 				"outputs": [],
 				"payable": false,
 				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "_to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "transferFrom",
+				"outputs": [],
+				"payable": true,
+				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -381,6 +518,13 @@
 		"remappings": []
 	},
 	"sources": {
+		"erc721.sol": {
+			"keccak256": "0xe67a968a1b2b241d2e9409bacb5a64648303ab336e460f102b6e9aa0bfa82d32",
+			"urls": [
+				"bzz-raw://3ec65341a0e15fab112a8b80ad74d9bb7739c8d51cef4f241fdcbbe9cac9ffd5",
+				"dweb:/ipfs/Qme1rjT2ffxQhG6YdspAGahmEdJ3twVr7cxxo3yrnVW1tA"
+			]
+		},
 		"ownable.sol": {
 			"keccak256": "0x6694abc0baa785b7f264982aa07d5fb7a13dab9e4e50e7710ecdbf1e72b4d022",
 			"urls": [
@@ -388,39 +532,46 @@
 				"dweb:/ipfs/QmV1mqW7ejRvXjyCGAcDmofzuot77fWMRXjGsKNXSvGbzn"
 			]
 		},
-		"zombieattack.sol": {
-			"keccak256": "0xa646048eb4842b77aac65d48c01dd95cbc4c5783c4f292349abf0a046769bfcf",
+		"safemath.sol": {
+			"keccak256": "0x827b1dd9cab9f22f974484879764d55e117f1454d85059aa39db26f76c8ec4fe",
 			"urls": [
-				"bzz-raw://523e001ac472294ac41939c5d16e6ec18cec39cdfc08379f962c69778f711c78",
-				"dweb:/ipfs/Qme4zj4Ub43wsBzXhE7avQWHxXtJ754odFRFKsbwUm9VFy"
+				"bzz-raw://daae26c77a04f96f7351312134480a21cbeb2358f5a8be3ab79f5f9ec5f82d40",
+				"dweb:/ipfs/QmSbqKsPG3ffxFP4knQywsXmk3CEjF4LFSnaQ9CtYqUPSb"
+			]
+		},
+		"zombieattack.sol": {
+			"keccak256": "0x41b880f91fdc251d4146e418bc040bc79498cfdac25b64233f2b75409d2a85ef",
+			"urls": [
+				"bzz-raw://801039bde91b51e010cb082e372336ecd2cda5fc9623e8f99e96efe4b582562b",
+				"dweb:/ipfs/QmVdBqtxUYFgVn9iC9n4AW8EP4T6ZT1rnBBGf7294pWrsj"
 			]
 		},
 		"zombiefactory.sol": {
-			"keccak256": "0xcfbcd739309b5ed7abf3ec041bd97493672ed8c5cbb325287a25b69bb8b234aa",
+			"keccak256": "0x60532404e7092144397e17e0771c55b9de76079705e2248b28e1ffe62ac349e3",
 			"urls": [
-				"bzz-raw://cf41690e442eb40044486ca77f6760981f280e77a28ddcb6aed1719ca0e053fb",
-				"dweb:/ipfs/QmeiJeeEhYEf25hT4HyXLqf9ztZqeZvzegZy6rMYufK8xw"
+				"bzz-raw://df9daa3442de78eddd2c6e98921d5f5e87f6cd93773b36f1d04dd2d9b8039282",
+				"dweb:/ipfs/QmbPnMcnR7usuVbxBrJZv9banA5SCNRaVa98dELRNSVPaP"
 			]
 		},
 		"zombiefeeding.sol": {
-			"keccak256": "0x5b782f002e410f5c26d1e84d84c5b01c9b2537c85c1b2561e90ee21fc4a62dea",
+			"keccak256": "0x94ef2af162f72446f5f0a90b19e4aa5225561304b821c4677b7c941756e62278",
 			"urls": [
-				"bzz-raw://22d0654cc4b97bc56dd45b9ad7749e4941ab798d2148e1ef74fca60ac4c48cfc",
-				"dweb:/ipfs/QmSDcJy6eA78h6sQPMMnwk8ZCBVRvBhU4dVSkqLwSGRMHU"
+				"bzz-raw://e061fb82ac0177174044471a32568aa205ba5e8e47b3c28cb8a586bf1a34ba80",
+				"dweb:/ipfs/QmT9J9Necxah58jEGUVUvjjk9L92N5zzPJDQUVGpBqFmfC"
 			]
 		},
 		"zombiehelper.sol": {
-			"keccak256": "0x2b4baf05fcac51b927e99f10823008552eb7c0ec026b090786797336c4eec341",
+			"keccak256": "0x3c2e4585190277dc0cafbf5c616b3b58e5dec675dc867fc8e30d38816107823e",
 			"urls": [
-				"bzz-raw://45cad6f1b39e2ce258cd4d71c970d84f9da58e2b86ed235b9986044f45c34c0c",
-				"dweb:/ipfs/QmZgPKhGBo53CtzMJBNnyHW3NG2NPRPPq26uaeea9t9uVd"
+				"bzz-raw://91dff07e6e87a7a4b1d1a2ffead2a1f66b38d2139fdd0b47ff4d200b382c3712",
+				"dweb:/ipfs/QmNyJQWTvcPA1ypwQ4pRLmLmGfD1R5bBzocfRW3tNoaYzr"
 			]
 		},
 		"zombieownership.sol": {
-			"keccak256": "0xcabcaf05d0ca19a30fede095ed3a7c164adffd30ac5d465d23a8adbf3d12c058",
+			"keccak256": "0x84f91171769faefbca1f5dfd19a80ae7ca55af2f56600fe8af7d8f40eb5c45fc",
 			"urls": [
-				"bzz-raw://538e3d6f0d7f4560eb94abb64eca2946324c3a4d1ff296a45ba388d26abc2238",
-				"dweb:/ipfs/QmX1kFsYkW4LEDz2a4jUEZ2Q47gvLW1bf1jyUqzozqDKgU"
+				"bzz-raw://a76d205741d30cb268bcef0db852fa4043709fa94a67dc8f531eea4491a2513c",
+				"dweb:/ipfs/QmbfpBfUPPwtZfqkG8uFjrJxkXNhdVV6CEKkoE1oWo2Usi"
 			]
 		}
 	},

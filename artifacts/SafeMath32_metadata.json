@@ -6,9 +6,9 @@
 	"output": {
 		"abi": [],
 		"devdoc": {
-			"details": "Math operations with safety checks that throw on error",
+			"details": "SafeMath library implemented for uint32",
 			"methods": {},
-			"title": "SafeMath"
+			"title": "SafeMath32"
 		},
 		"userdoc": {
 			"methods": {}
@@ -16,7 +16,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"safemath.sol": "SafeMath"
+			"safemath.sol": "SafeMath32"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
