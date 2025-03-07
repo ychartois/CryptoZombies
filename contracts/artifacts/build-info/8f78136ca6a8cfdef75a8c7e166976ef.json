@@ -1,12 +1,12 @@
 {
-	"id": "24b0b65cef130bb3d3e301b22059bd2d",
+	"id": "8f78136ca6a8cfdef75a8c7e166976ef",
 	"_format": "hh-sol-build-info-1",
 	"solcVersion": "0.5.17",
 	"solcLongVersion": "0.5.17+commit.d19bba13",
 	"input": {
 		"language": "Solidity",
 		"sources": {
-			"safemath.sol": {
+			"contracts/safemath.sol": {
 				"content": "pragma solidity >=0.5.0 <0.6.0;\n\n/**\n * @title SafeMath\n * @dev Math operations with safety checks that throw on error\n */\nlibrary SafeMath {\n\n  /**\n  * @dev Multiplies two numbers, throws on overflow.\n  */\n  function mul(uint256 a, uint256 b) internal pure returns (uint256) {\n    if (a == 0) {\n      return 0;\n    }\n    uint256 c = a * b;\n    assert(c / a == b);\n    return c;\n  }\n\n  /**\n  * @dev Integer division of two numbers, truncating the quotient.\n  */\n  function div(uint256 a, uint256 b) internal pure returns (uint256) {\n    // assert(b > 0); // Solidity automatically throws when dividing by 0\n    uint256 c = a / b;\n    // assert(a == b * c + a % b); // There is no case in which this doesn't hold\n    return c;\n  }\n\n  /**\n  * @dev Subtracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).\n  */\n  function sub(uint256 a, uint256 b) internal pure returns (uint256) {\n    assert(b <= a);\n    return a - b;\n  }\n\n  /**\n  * @dev Adds two numbers, throws on overflow.\n  */\n  function add(uint256 a, uint256 b) internal pure returns (uint256) {\n    uint256 c = a + b;\n    assert(c >= a);\n    return c;\n  }\n}\n\n/**\n * @title SafeMath32\n * @dev SafeMath library implemented for uint32\n */\nlibrary SafeMath32 {\n\n  function mul(uint32 a, uint32 b) internal pure returns (uint32) {\n    if (a == 0) {\n      return 0;\n    }\n    uint32 c = a * b;\n    assert(c / a == b);\n    return c;\n  }\n\n  function div(uint32 a, uint32 b) internal pure returns (uint32) {\n    // assert(b > 0); // Solidity automatically throws when dividing by 0\n    uint32 c = a / b;\n    // assert(a == b * c + a % b); // There is no case in which this doesn't hold\n    return c;\n  }\n\n  function sub(uint32 a, uint32 b) internal pure returns (uint32) {\n    assert(b <= a);\n    return a - b;\n  }\n\n  function add(uint32 a, uint32 b) internal pure returns (uint32) {\n    uint32 c = a + b;\n    assert(c >= a);\n    return c;\n  }\n}\n\n/**\n * @title SafeMath16\n * @dev SafeMath library implemented for uint16\n */\nlibrary SafeMath16 {\n\n  function mul(uint16 a, uint16 b) internal pure returns (uint16) {\n    if (a == 0) {\n      return 0;\n    }\n    uint16 c = a * b;\n    assert(c / a == b);\n    return c;\n  }\n\n  function div(uint16 a, uint16 b) internal pure returns (uint16) {\n    // assert(b > 0); // Solidity automatically throws when dividing by 0\n    uint16 c = a / b;\n    // assert(a == b * c + a % b); // There is no case in which this doesn't hold\n    return c;\n  }\n\n  function sub(uint16 a, uint16 b) internal pure returns (uint16) {\n    assert(b <= a);\n    return a - b;\n  }\n\n  function add(uint16 a, uint16 b) internal pure returns (uint16) {\n    uint16 c = a + b;\n    assert(c >= a);\n    return c;\n  }\n}\n"
 			}
 		},
@@ -40,7 +40,7 @@
 	},
 	"output": {
 		"contracts": {
-			"safemath.sol": {
+			"contracts/safemath.sol": {
 				"SafeMath": {
 					"abi": [],
 					"devdoc": {
@@ -49,17 +49,17 @@
 						"title": "SafeMath"
 					},
 					"evm": {
-						"assembly": "    /* \"safemath.sol\":123:1144  library SafeMath {... */\n  dataSize(sub_0)\n  dataOffset(sub_0)\n    /* \"--CODEGEN--\":132:134   */\n  0x0b\n    /* \"--CODEGEN--\":166:173   */\n  dup3\n    /* \"--CODEGEN--\":155:164   */\n  dup3\n    /* \"--CODEGEN--\":146:153   */\n  dup3\n    /* \"--CODEGEN--\":137:174   */\n  codecopy\n    /* \"--CODEGEN--\":255:262   */\n  dup1\n    /* \"--CODEGEN--\":249:263   */\n  mload\n    /* \"--CODEGEN--\":246:247   */\n  0x00\n    /* \"--CODEGEN--\":241:264   */\n  byte\n    /* \"--CODEGEN--\":235:239   */\n  0x73\n    /* \"--CODEGEN--\":232:265   */\n  eq\n    /* \"--CODEGEN--\":222:224   */\n  tag_1\n  jumpi\n    /* \"--CODEGEN--\":269:278   */\n  invalid\n    /* \"--CODEGEN--\":222:224   */\ntag_1:\n    /* \"--CODEGEN--\":293:302   */\n  address\n    /* \"--CODEGEN--\":290:291   */\n  0x00\n    /* \"--CODEGEN--\":283:303   */\n  mstore\n    /* \"--CODEGEN--\":323:327   */\n  0x73\n    /* \"--CODEGEN--\":314:321   */\n  dup2\n    /* \"--CODEGEN--\":306:328   */\n  mstore8\n    /* \"--CODEGEN--\":347:354   */\n  dup3\n    /* \"--CODEGEN--\":338:345   */\n  dup2\n    /* \"--CODEGEN--\":331:355   */\n  return\nstop\n\nsub_0: assembly {\n        /* \"safemath.sol\":123:1144  library SafeMath {... */\n      eq(address, deployTimeAddress())\n      mstore(0x40, 0x80)\n      0x00\n      dup1\n      revert\n\n    auxdata: 0xa265627a7a7231582046be5bc14079bfb22e0694f29b82d9f4aa525662f831442087d267c95817cfb064736f6c63430005110032\n}\n",
+						"assembly": "    /* \"contracts/safemath.sol\":123:1144  library SafeMath {... */\n  dataSize(sub_0)\n  dataOffset(sub_0)\n    /* \"--CODEGEN--\":132:134   */\n  0x0b\n    /* \"--CODEGEN--\":166:173   */\n  dup3\n    /* \"--CODEGEN--\":155:164   */\n  dup3\n    /* \"--CODEGEN--\":146:153   */\n  dup3\n    /* \"--CODEGEN--\":137:174   */\n  codecopy\n    /* \"--CODEGEN--\":255:262   */\n  dup1\n    /* \"--CODEGEN--\":249:263   */\n  mload\n    /* \"--CODEGEN--\":246:247   */\n  0x00\n    /* \"--CODEGEN--\":241:264   */\n  byte\n    /* \"--CODEGEN--\":235:239   */\n  0x73\n    /* \"--CODEGEN--\":232:265   */\n  eq\n    /* \"--CODEGEN--\":222:224   */\n  tag_1\n  jumpi\n    /* \"--CODEGEN--\":269:278   */\n  invalid\n    /* \"--CODEGEN--\":222:224   */\ntag_1:\n    /* \"--CODEGEN--\":293:302   */\n  address\n    /* \"--CODEGEN--\":290:291   */\n  0x00\n    /* \"--CODEGEN--\":283:303   */\n  mstore\n    /* \"--CODEGEN--\":323:327   */\n  0x73\n    /* \"--CODEGEN--\":314:321   */\n  dup2\n    /* \"--CODEGEN--\":306:328   */\n  mstore8\n    /* \"--CODEGEN--\":347:354   */\n  dup3\n    /* \"--CODEGEN--\":338:345   */\n  dup2\n    /* \"--CODEGEN--\":331:355   */\n  return\nstop\n\nsub_0: assembly {\n        /* \"contracts/safemath.sol\":123:1144  library SafeMath {... */\n      eq(address, deployTimeAddress())\n      mstore(0x40, 0x80)\n      0x00\n      dup1\n      revert\n\n    auxdata: 0xa265627a7a723158203880cc256d7727b960af7dc585086dd59c117ec2c29b5a29257e0030d8b7cad064736f6c63430005110032\n}\n",
 						"bytecode": {
 							"linkReferences": {},
-							"object": "60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7231582046be5bc14079bfb22e0694f29b82d9f4aa525662f831442087d267c95817cfb064736f6c63430005110032",
-							"opcodes": "PUSH1 0x55 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 CHAINID 0xBE JUMPDEST 0xC1 BLOCKHASH PUSH26 0xBFB22E0694F29B82D9F4AA525662F831442087D267C95817CFB0 PUSH5 0x736F6C6343 STOP SDIV GT STOP ORIGIN ",
+							"object": "60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158203880cc256d7727b960af7dc585086dd59c117ec2c29b5a29257e0030d8b7cad064736f6c63430005110032",
+							"opcodes": "PUSH1 0x55 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 CODESIZE DUP1 0xCC 0x25 PUSH14 0x7727B960AF7DC585086DD59C117E 0xC2 0xC2 SWAP12 GAS 0x29 0x25 PUSH31 0x30D8B7CAD064736F6C634300051100320000000000000000000000000000 ",
 							"sourceMap": "123:1021:0:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24"
 						},
 						"deployedBytecode": {
 							"linkReferences": {},
-							"object": "73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7231582046be5bc14079bfb22e0694f29b82d9f4aa525662f831442087d267c95817cfb064736f6c63430005110032",
-							"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 CHAINID 0xBE JUMPDEST 0xC1 BLOCKHASH PUSH26 0xBFB22E0694F29B82D9F4AA525662F831442087D267C95817CFB0 PUSH5 0x736F6C6343 STOP SDIV GT STOP ORIGIN ",
+							"object": "73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158203880cc256d7727b960af7dc585086dd59c117ec2c29b5a29257e0030d8b7cad064736f6c63430005110032",
+							"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 CODESIZE DUP1 0xCC 0x25 PUSH14 0x7727B960AF7DC585086DD59C117E 0xC2 0xC2 SWAP12 GAS 0x29 0x25 PUSH31 0x30D8B7CAD064736F6C634300051100320000000000000000000000000000 ",
 							"sourceMap": "123:1021:0:-;;;;;;;;"
 						},
 						"gasEstimates": {
@@ -224,7 +224,7 @@
 							],
 							".data": {
 								"0": {
-									".auxdata": "a265627a7a7231582046be5bc14079bfb22e0694f29b82d9f4aa525662f831442087d267c95817cfb064736f6c63430005110032",
+									".auxdata": "a265627a7a723158203880cc256d7727b960af7dc585086dd59c117ec2c29b5a29257e0030d8b7cad064736f6c63430005110032",
 									".code": [
 										{
 											"begin": 123,
@@ -280,7 +280,7 @@
 						},
 						"methodIdentifiers": {}
 					},
-					"metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"Math operations with safety checks that throw on error\",\"methods\":{},\"title\":\"SafeMath\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"safemath.sol\":\"SafeMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"safemath.sol\":{\"keccak256\":\"0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c\",\"urls\":[\"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae\",\"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51\"]}},\"version\":1}",
+					"metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"Math operations with safety checks that throw on error\",\"methods\":{},\"title\":\"SafeMath\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"contracts/safemath.sol\":\"SafeMath\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/safemath.sol\":{\"keccak256\":\"0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c\",\"urls\":[\"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae\",\"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51\"]}},\"version\":1}",
 					"storageLayout": {
 						"storage": [],
 						"types": null
@@ -297,17 +297,17 @@
 						"title": "SafeMath16"
 					},
 					"evm": {
-						"assembly": "    /* \"safemath.sol\":2002:2702  library SafeMath16 {... */\n  dataSize(sub_0)\n  dataOffset(sub_0)\n    /* \"--CODEGEN--\":132:134   */\n  0x0b\n    /* \"--CODEGEN--\":166:173   */\n  dup3\n    /* \"--CODEGEN--\":155:164   */\n  dup3\n    /* \"--CODEGEN--\":146:153   */\n  dup3\n    /* \"--CODEGEN--\":137:174   */\n  codecopy\n    /* \"--CODEGEN--\":255:262   */\n  dup1\n    /* \"--CODEGEN--\":249:263   */\n  mload\n    /* \"--CODEGEN--\":246:247   */\n  0x00\n    /* \"--CODEGEN--\":241:264   */\n  byte\n    /* \"--CODEGEN--\":235:239   */\n  0x73\n    /* \"--CODEGEN--\":232:265   */\n  eq\n    /* \"--CODEGEN--\":222:224   */\n  tag_1\n  jumpi\n    /* \"--CODEGEN--\":269:278   */\n  invalid\n    /* \"--CODEGEN--\":222:224   */\ntag_1:\n    /* \"--CODEGEN--\":293:302   */\n  address\n    /* \"--CODEGEN--\":290:291   */\n  0x00\n    /* \"--CODEGEN--\":283:303   */\n  mstore\n    /* \"--CODEGEN--\":323:327   */\n  0x73\n    /* \"--CODEGEN--\":314:321   */\n  dup2\n    /* \"--CODEGEN--\":306:328   */\n  mstore8\n    /* \"--CODEGEN--\":347:354   */\n  dup3\n    /* \"--CODEGEN--\":338:345   */\n  dup2\n    /* \"--CODEGEN--\":331:355   */\n  return\nstop\n\nsub_0: assembly {\n        /* \"safemath.sol\":2002:2702  library SafeMath16 {... */\n      eq(address, deployTimeAddress())\n      mstore(0x40, 0x80)\n      0x00\n      dup1\n      revert\n\n    auxdata: 0xa265627a7a72315820a3933b5f187ee419dfdfe8a9c67f8b6c233e005f9bbf1841ea0fa3c992b431b664736f6c63430005110032\n}\n",
+						"assembly": "    /* \"contracts/safemath.sol\":2002:2702  library SafeMath16 {... */\n  dataSize(sub_0)\n  dataOffset(sub_0)\n    /* \"--CODEGEN--\":132:134   */\n  0x0b\n    /* \"--CODEGEN--\":166:173   */\n  dup3\n    /* \"--CODEGEN--\":155:164   */\n  dup3\n    /* \"--CODEGEN--\":146:153   */\n  dup3\n    /* \"--CODEGEN--\":137:174   */\n  codecopy\n    /* \"--CODEGEN--\":255:262   */\n  dup1\n    /* \"--CODEGEN--\":249:263   */\n  mload\n    /* \"--CODEGEN--\":246:247   */\n  0x00\n    /* \"--CODEGEN--\":241:264   */\n  byte\n    /* \"--CODEGEN--\":235:239   */\n  0x73\n    /* \"--CODEGEN--\":232:265   */\n  eq\n    /* \"--CODEGEN--\":222:224   */\n  tag_1\n  jumpi\n    /* \"--CODEGEN--\":269:278   */\n  invalid\n    /* \"--CODEGEN--\":222:224   */\ntag_1:\n    /* \"--CODEGEN--\":293:302   */\n  address\n    /* \"--CODEGEN--\":290:291   */\n  0x00\n    /* \"--CODEGEN--\":283:303   */\n  mstore\n    /* \"--CODEGEN--\":323:327   */\n  0x73\n    /* \"--CODEGEN--\":314:321   */\n  dup2\n    /* \"--CODEGEN--\":306:328   */\n  mstore8\n    /* \"--CODEGEN--\":347:354   */\n  dup3\n    /* \"--CODEGEN--\":338:345   */\n  dup2\n    /* \"--CODEGEN--\":331:355   */\n  return\nstop\n\nsub_0: assembly {\n        /* \"contracts/safemath.sol\":2002:2702  library SafeMath16 {... */\n      eq(address, deployTimeAddress())\n      mstore(0x40, 0x80)\n      0x00\n      dup1\n      revert\n\n    auxdata: 0xa265627a7a7231582095fb9a15d1050035527234f1ea0ca36a9433f1199d352aca8730850ef12e72ed64736f6c63430005110032\n}\n",
 						"bytecode": {
 							"linkReferences": {},
-							"object": "60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820a3933b5f187ee419dfdfe8a9c67f8b6c233e005f9bbf1841ea0fa3c992b431b664736f6c63430005110032",
-							"opcodes": "PUSH1 0x55 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 LOG3 SWAP4 EXTCODESIZE 0x5F XOR PUSH31 0xE419DFDFE8A9C67F8B6C233E005F9BBF1841EA0FA3C992B431B664736F6C63 NUMBER STOP SDIV GT STOP ORIGIN ",
+							"object": "60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7231582095fb9a15d1050035527234f1ea0ca36a9433f1199d352aca8730850ef12e72ed64736f6c63430005110032",
+							"opcodes": "PUSH1 0x55 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 SWAP6 0xFB SWAP11 ISZERO 0xD1 SDIV STOP CALLDATALOAD MSTORE PUSH19 0x34F1EA0CA36A9433F1199D352ACA8730850EF1 0x2E PUSH19 0xED64736F6C6343000511003200000000000000 ",
 							"sourceMap": "2002:700:0:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24"
 						},
 						"deployedBytecode": {
 							"linkReferences": {},
-							"object": "73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a72315820a3933b5f187ee419dfdfe8a9c67f8b6c233e005f9bbf1841ea0fa3c992b431b664736f6c63430005110032",
-							"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 LOG3 SWAP4 EXTCODESIZE 0x5F XOR PUSH31 0xE419DFDFE8A9C67F8B6C233E005F9BBF1841EA0FA3C992B431B664736F6C63 NUMBER STOP SDIV GT STOP ORIGIN ",
+							"object": "73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a7231582095fb9a15d1050035527234f1ea0ca36a9433f1199d352aca8730850ef12e72ed64736f6c63430005110032",
+							"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 SWAP6 0xFB SWAP11 ISZERO 0xD1 SDIV STOP CALLDATALOAD MSTORE PUSH19 0x34F1EA0CA36A9433F1199D352ACA8730850EF1 0x2E PUSH19 0xED64736F6C6343000511003200000000000000 ",
 							"sourceMap": "2002:700:0:-;;;;;;;;"
 						},
 						"gasEstimates": {
@@ -472,7 +472,7 @@
 							],
 							".data": {
 								"0": {
-									".auxdata": "a265627a7a72315820a3933b5f187ee419dfdfe8a9c67f8b6c233e005f9bbf1841ea0fa3c992b431b664736f6c63430005110032",
+									".auxdata": "a265627a7a7231582095fb9a15d1050035527234f1ea0ca36a9433f1199d352aca8730850ef12e72ed64736f6c63430005110032",
 									".code": [
 										{
 											"begin": 2002,
@@ -528,7 +528,7 @@
 						},
 						"methodIdentifiers": {}
 					},
-					"metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"SafeMath library implemented for uint16\",\"methods\":{},\"title\":\"SafeMath16\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"safemath.sol\":\"SafeMath16\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"safemath.sol\":{\"keccak256\":\"0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c\",\"urls\":[\"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae\",\"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51\"]}},\"version\":1}",
+					"metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"SafeMath library implemented for uint16\",\"methods\":{},\"title\":\"SafeMath16\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"contracts/safemath.sol\":\"SafeMath16\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/safemath.sol\":{\"keccak256\":\"0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c\",\"urls\":[\"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae\",\"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51\"]}},\"version\":1}",
 					"storageLayout": {
 						"storage": [],
 						"types": null
@@ -545,17 +545,17 @@
 						"title": "SafeMath32"
 					},
 					"evm": {
-						"assembly": "    /* \"safemath.sol\":1223:1923  library SafeMath32 {... */\n  dataSize(sub_0)\n  dataOffset(sub_0)\n    /* \"--CODEGEN--\":132:134   */\n  0x0b\n    /* \"--CODEGEN--\":166:173   */\n  dup3\n    /* \"--CODEGEN--\":155:164   */\n  dup3\n    /* \"--CODEGEN--\":146:153   */\n  dup3\n    /* \"--CODEGEN--\":137:174   */\n  codecopy\n    /* \"--CODEGEN--\":255:262   */\n  dup1\n    /* \"--CODEGEN--\":249:263   */\n  mload\n    /* \"--CODEGEN--\":246:247   */\n  0x00\n    /* \"--CODEGEN--\":241:264   */\n  byte\n    /* \"--CODEGEN--\":235:239   */\n  0x73\n    /* \"--CODEGEN--\":232:265   */\n  eq\n    /* \"--CODEGEN--\":222:224   */\n  tag_1\n  jumpi\n    /* \"--CODEGEN--\":269:278   */\n  invalid\n    /* \"--CODEGEN--\":222:224   */\ntag_1:\n    /* \"--CODEGEN--\":293:302   */\n  address\n    /* \"--CODEGEN--\":290:291   */\n  0x00\n    /* \"--CODEGEN--\":283:303   */\n  mstore\n    /* \"--CODEGEN--\":323:327   */\n  0x73\n    /* \"--CODEGEN--\":314:321   */\n  dup2\n    /* \"--CODEGEN--\":306:328   */\n  mstore8\n    /* \"--CODEGEN--\":347:354   */\n  dup3\n    /* \"--CODEGEN--\":338:345   */\n  dup2\n    /* \"--CODEGEN--\":331:355   */\n  return\nstop\n\nsub_0: assembly {\n        /* \"safemath.sol\":1223:1923  library SafeMath32 {... */\n      eq(address, deployTimeAddress())\n      mstore(0x40, 0x80)\n      0x00\n      dup1\n      revert\n\n    auxdata: 0xa265627a7a723158201e08648b51103efb998fe979eaba66f8255b130baff8c35af1b7087baa7c9d2264736f6c63430005110032\n}\n",
+						"assembly": "    /* \"contracts/safemath.sol\":1223:1923  library SafeMath32 {... */\n  dataSize(sub_0)\n  dataOffset(sub_0)\n    /* \"--CODEGEN--\":132:134   */\n  0x0b\n    /* \"--CODEGEN--\":166:173   */\n  dup3\n    /* \"--CODEGEN--\":155:164   */\n  dup3\n    /* \"--CODEGEN--\":146:153   */\n  dup3\n    /* \"--CODEGEN--\":137:174   */\n  codecopy\n    /* \"--CODEGEN--\":255:262   */\n  dup1\n    /* \"--CODEGEN--\":249:263   */\n  mload\n    /* \"--CODEGEN--\":246:247   */\n  0x00\n    /* \"--CODEGEN--\":241:264   */\n  byte\n    /* \"--CODEGEN--\":235:239   */\n  0x73\n    /* \"--CODEGEN--\":232:265   */\n  eq\n    /* \"--CODEGEN--\":222:224   */\n  tag_1\n  jumpi\n    /* \"--CODEGEN--\":269:278   */\n  invalid\n    /* \"--CODEGEN--\":222:224   */\ntag_1:\n    /* \"--CODEGEN--\":293:302   */\n  address\n    /* \"--CODEGEN--\":290:291   */\n  0x00\n    /* \"--CODEGEN--\":283:303   */\n  mstore\n    /* \"--CODEGEN--\":323:327   */\n  0x73\n    /* \"--CODEGEN--\":314:321   */\n  dup2\n    /* \"--CODEGEN--\":306:328   */\n  mstore8\n    /* \"--CODEGEN--\":347:354   */\n  dup3\n    /* \"--CODEGEN--\":338:345   */\n  dup2\n    /* \"--CODEGEN--\":331:355   */\n  return\nstop\n\nsub_0: assembly {\n        /* \"contracts/safemath.sol\":1223:1923  library SafeMath32 {... */\n      eq(address, deployTimeAddress())\n      mstore(0x40, 0x80)\n      0x00\n      dup1\n      revert\n\n    auxdata: 0xa265627a7a723158208d23498d88a2bba7e020b6ef5d15b04c42a242209b3b8a3b904ced79ffd401a864736f6c63430005110032\n}\n",
 						"bytecode": {
 							"linkReferences": {},
-							"object": "60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158201e08648b51103efb998fe979eaba66f8255b130baff8c35af1b7087baa7c9d2264736f6c63430005110032",
-							"opcodes": "PUSH1 0x55 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 0x1E ADDMOD PUSH5 0x8B51103EFB SWAP10 DUP16 0xE9 PUSH26 0xEABA66F8255B130BAFF8C35AF1B7087BAA7C9D2264736F6C6343 STOP SDIV GT STOP ORIGIN ",
+							"object": "60556023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158208d23498d88a2bba7e020b6ef5d15b04c42a242209b3b8a3b904ced79ffd401a864736f6c63430005110032",
+							"opcodes": "PUSH1 0x55 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 DUP14 0x23 0x49 DUP14 DUP9 LOG2 0xBB 0xA7 0xE0 KECCAK256 0xB6 0xEF 0x5D ISZERO 0xB0 0x4C TIMESTAMP LOG2 TIMESTAMP KECCAK256 SWAP12 EXTCODESIZE DUP11 EXTCODESIZE SWAP1 0x4C 0xED PUSH26 0xFFD401A864736F6C634300051100320000000000000000000000 ",
 							"sourceMap": "1223:700:0:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24"
 						},
 						"deployedBytecode": {
 							"linkReferences": {},
-							"object": "73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158201e08648b51103efb998fe979eaba66f8255b130baff8c35af1b7087baa7c9d2264736f6c63430005110032",
-							"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 0x1E ADDMOD PUSH5 0x8B51103EFB SWAP10 DUP16 0xE9 PUSH26 0xEABA66F8255B130BAFF8C35AF1B7087BAA7C9D2264736F6C6343 STOP SDIV GT STOP ORIGIN ",
+							"object": "73000000000000000000000000000000000000000030146080604052600080fdfea265627a7a723158208d23498d88a2bba7e020b6ef5d15b04c42a242209b3b8a3b904ced79ffd401a864736f6c63430005110032",
+							"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH6 0x627A7A723158 KECCAK256 DUP14 0x23 0x49 DUP14 DUP9 LOG2 0xBB 0xA7 0xE0 KECCAK256 0xB6 0xEF 0x5D ISZERO 0xB0 0x4C TIMESTAMP LOG2 TIMESTAMP KECCAK256 SWAP12 EXTCODESIZE DUP11 EXTCODESIZE SWAP1 0x4C 0xED PUSH26 0xFFD401A864736F6C634300051100320000000000000000000000 ",
 							"sourceMap": "1223:700:0:-;;;;;;;;"
 						},
 						"gasEstimates": {
@@ -720,7 +720,7 @@
 							],
 							".data": {
 								"0": {
-									".auxdata": "a265627a7a723158201e08648b51103efb998fe979eaba66f8255b130baff8c35af1b7087baa7c9d2264736f6c63430005110032",
+									".auxdata": "a265627a7a723158208d23498d88a2bba7e020b6ef5d15b04c42a242209b3b8a3b904ced79ffd401a864736f6c63430005110032",
 									".code": [
 										{
 											"begin": 1223,
@@ -776,7 +776,7 @@
 						},
 						"methodIdentifiers": {}
 					},
-					"metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"SafeMath library implemented for uint32\",\"methods\":{},\"title\":\"SafeMath32\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"safemath.sol\":\"SafeMath32\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"safemath.sol\":{\"keccak256\":\"0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c\",\"urls\":[\"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae\",\"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51\"]}},\"version\":1}",
+					"metadata": "{\"compiler\":{\"version\":\"0.5.17+commit.d19bba13\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"SafeMath library implemented for uint32\",\"methods\":{},\"title\":\"SafeMath32\"},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"contracts/safemath.sol\":\"SafeMath32\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"contracts/safemath.sol\":{\"keccak256\":\"0xc33fbfd715f7b3225c7ed2eebfd4877a9c64b58a8bcd4e576cf3c0666c5e9b8c\",\"urls\":[\"bzz-raw://6468676b06e605655167d56a70c0eb0f855df0564dff11accb4ece31d834beae\",\"dweb:/ipfs/QmX7Qa9r4ogjyevLH3khuN5w81CZYvbiwyW9BKiqwvzH51\"]}},\"version\":1}",
 					"storageLayout": {
 						"storage": [],
 						"types": null
@@ -788,9 +788,9 @@
 			}
 		},
 		"sources": {
-			"safemath.sol": {
+			"contracts/safemath.sol": {
 				"ast": {
-					"absolutePath": "safemath.sol",
+					"absolutePath": "contracts/safemath.sol",
 					"exportedSymbols": {
 						"SafeMath": [
 							97
