@@ -1,133 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>CryptoZombies front-end</title>
-    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script language="javascript" type="text/javascript" src="web3.min.js"></script>
-    <script language="javascript" type="text/javascript" src="cryptozombies_abi.js"></script>
-  </head>
-  <body>
-    <div id="txStatus"></div>
-    <div id="zombies"></div>
+<head>
+  <meta charset="UTF-8">
+  <title>CryptoZombies front-end</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="cryptozombies_abi.js"></script>
+</head>
+<body>
+  <div id="txStatus"></div>
+  <div id="zombies"></div>
+  
+  <!-- Connect Button -->
+  <button id="connectButton">Connect to MetaMask</button>
 
-    <script>
-      var cryptoZombies;
-      var userAccount;
+  <script>
+    let cryptoZombies;
+    let userAccount;
+    let web3;
 
-      function startApp() {
-        var cryptoZombiesAddress = "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8";
-        cryptoZombies = new web3js.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+    /** Detects and waits for MetaMask */
+    async function waitForMetaMask() {
+        console.log("Waiting for MetaMask...");
+        let attempts = 0;
+        
+        const checkMetaMask = setInterval(() => {
+            if (typeof window.ethereum !== 'undefined') {
+                console.log("✅ MetaMask detected!");
+                clearInterval(checkMetaMask);
+                initializeWeb3(); // Initialize Web3 once MetaMask loads
+            } else {
+                console.warn("🚨 MetaMask not found. Attempt:", ++attempts);
+            }
+            
+            if (attempts > 10) { // Stop after 10 attempts (~5 seconds)
+                clearInterval(checkMetaMask);
+                alert("❌ MetaMask not detected. Please install MetaMask and reload.");
+            }
+        }, 500);
+    }
 
-        var accountInterval = setInterval(function() {
-         
-          if (web3.eth.accounts[0] !== userAccount) {
-            userAccount = web3.eth.accounts[0];
-           
-            getZombiesByOwner(userAccount)
-            .then(displayZombies);
-          }
-        }, 100);
-
-        cryptoZombies.events.Transfer({ filter: { _to: userAccount } })
-        .on("data", function(event) {
-          let data = event.returnValues;
-          getZombiesByOwner(userAccount).then(displayZombies);
-        }).on("error", console.error);
-      }
-
-      function displayZombies(ids) {
-        $("#zombies").empty();
-        for (const id of ids) {
-         
-          getZombieDetails(id)
-          .then(function(zombie) {
-           
-           
-            $("#zombies").append(`<div class="zombie">
-              <ul>
-                <li>Name: ${zombie.name}</li>
-                <li>DNA: ${zombie.dna}</li>
-                <li>Level: ${zombie.level}</li>
-                <li>Wins: ${zombie.winCount}</li>
-                <li>Losses: ${zombie.lossCount}</li>
-                <li>Ready Time: ${zombie.readyTime}</li>
-              </ul>
-            </div>`);
-          });
-        }
-      }
-
-      function createRandomZombie(name) {
-       
-       
-        $("#txStatus").text("Creating new zombie on the blockchain. This may take a while...");
-       
-        return cryptoZombies.methods.createRandomZombie(name)
-        .send({ from: userAccount })
-        .on("receipt", function(receipt) {
-          $("#txStatus").text("Successfully created " + name + "!");
-         
-          getZombiesByOwner(userAccount).then(displayZombies);
-        })
-        .on("error", function(error) {
-         
-          $("#txStatus").text(error);
-        });
-      }
-
-      function feedOnKitty(zombieId, kittyId) {
-        $("#txStatus").text("Eating a kitty. This may take a while...");
-        return cryptoZombies.methods.feedOnKitty(zombieId, kittyId)
-        .send({ from: userAccount })
-        .on("receipt", function(receipt) {
-          $("#txStatus").text("Ate a kitty and spawned a new Zombie!");
-          getZombiesByOwner(userAccount).then(displayZombies);
-        })
-        .on("error", function(error) {
-          $("#txStatus").text(error);
-        });
-      }
-
-      function levelUp(zombieId) {
-        $("#txStatus").text("Leveling up your zombie...");
-        return cryptoZombies.methods.levelUp(zombieId)
-        .send({ from: userAccount, value: web3.utils.toWei("0.001", "ether") })
-        .on("receipt", function(receipt) {
-          $("#txStatus").text("Power overwhelming! Zombie successfully leveled up");
-        })
-        .on("error", function(error) {
-          $("#txStatus").text(error);
-        });
-      }
-
-      function getZombieDetails(id) {
-        return cryptoZombies.methods.zombies(id).call()
-      }
-
-      function zombieToOwner(id) {
-        return cryptoZombies.methods.zombieToOwner(id).call()
-      }
-
-      function getZombiesByOwner(owner) {
-        return cryptoZombies.methods.getZombiesByOwner(owner).call()
-      }
-
-      window.addEventListener('load', function() {
-
-       
-        if (typeof web3 !== 'undefined') {
-         
-          web3js = new Web3(web3.currentProvider);
+    /** Initialize Web3 and request account access */
+    async function initializeWeb3() {
+        if (typeof window.ethereum !== 'undefined') {
+            try {
+                web3 = new Web3(window.ethereum);
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const accounts = await web3.eth.getAccounts();
+                userAccount = accounts[0];
+                console.log("🎉 Connected account:", userAccount);
+                startApp();
+            } catch (error) {
+                console.error("⚠️ MetaMask connection failed", error);
+            }
         } else {
-         
-         
+            console.error("❌ MetaMask not detected!");
+            alert("Please install MetaMask to use this dApp.");
         }
+    }
 
-       
-        startApp()
+    /** Handles MetaMask connection request */
+    document.getElementById("connectButton").addEventListener("click", async () => {
+        try {
+            await initializeWeb3();
+        } catch (error) {
+            console.error("User denied MetaMask connection", error);
+        }
+    });
 
-      })
-    </script>
-  </body>
+    /** Core CryptoZombies Logic */
+    async function startApp() {
+        console.log("Starting App...");
+
+        const cryptoZombiesAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+        cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+
+        updateAccount();
+        subscribeToEvents();
+    }
+
+    async function updateAccount() {
+        const accounts = await web3.eth.getAccounts();
+        if (accounts.length > 0) {
+            if (userAccount !== accounts[0]) {
+                userAccount = accounts[0];
+                console.log("Account changed:", userAccount);
+                getZombiesByOwner(userAccount).then(displayZombies);
+            }
+        }
+    }
+
+    function subscribeToEvents() {
+        if (userAccount) {
+            cryptoZombies.events.Transfer({ filter: { _to: userAccount } })
+                .on("data", function (event) {
+                    console.log("Transfer event received", event);
+                    getZombiesByOwner(userAccount).then(displayZombies);
+                })
+                .on("error", console.error);
+        }
+    }
+
+    function displayZombies(ids) {
+        console.log("Displaying Zombies", ids);
+        $("#zombies").empty();
+        ids.forEach(id => {
+            getZombieDetails(id).then(zombie => {
+                $("#zombies").append(`
+                    <div class="zombie">
+                        <ul>
+                            <li>Name: ${zombie.name}</li>
+                            <li>DNA: ${zombie.dna}</li>
+                            <li>Level: ${zombie.level}</li>
+                            <li>Wins: ${zombie.winCount}</li>
+                            <li>Losses: ${zombie.lossCount}</li>
+                            <li>Ready Time: ${zombie.readyTime}</li>
+                        </ul>
+                    </div>
+                `);
+            });
+        });
+    }
+
+    function createRandomZombie(name) {
+        $("#txStatus").text("Creating new zombie on the blockchain. This may take a while...");
+
+        return cryptoZombies.methods.createRandomZombie(name)
+            .send({ from: userAccount })
+            .on("receipt", function (receipt) {
+                $("#txStatus").text(`Successfully created ${name}!`);
+                getZombiesByOwner(userAccount).then(displayZombies);
+            })
+            .on("error", function (error) {
+                $("#txStatus").text(error.message);
+            });
+    }
+
+    function feedOnKitty(zombieId, kittyId) {
+        $("#txStatus").text("Eating a kitty. This may take a while...");
+
+        return cryptoZombies.methods.feedOnKitty(zombieId, kittyId)
+            .send({ from: userAccount })
+            .on("receipt", function () {
+                $("#txStatus").text("Ate a kitty and spawned a new Zombie!");
+                getZombiesByOwner(userAccount).then(displayZombies);
+            })
+            .on("error", function (error) {
+                $("#txStatus").text(error.message);
+            });
+    }
+
+    function levelUp(zombieId) {
+        $("#txStatus").text("Leveling up your zombie...");
+
+        return cryptoZombies.methods.levelUp(zombieId)
+            .send({ from: userAccount, value: web3.utils.toWei("0.001", "ether") })
+            .on("receipt", function () {
+                $("#txStatus").text("Power overwhelming! Zombie successfully leveled up");
+            })
+            .on("error", function (error) {
+                $("#txStatus").text(error.message);
+            });
+    }
+
+    function getZombieDetails(id) {
+        return cryptoZombies.methods.zombies(id).call();
+    }
+
+    function getZombiesByOwner(owner) {
+        return cryptoZombies.methods.getZombiesByOwner(owner).call();
+    }
+
+    /** Detect MetaMask on page load */
+    window.addEventListener('load', async function () {
+        await waitForMetaMask();
+        if (typeof window.ethereum !== 'undefined') {
+            ethereum.on('accountsChanged', updateAccount);
+        }
+    });
+
+  </script>
+</body>
 </html>
