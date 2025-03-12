@@ -17,10 +17,79 @@
     .success { color: green; }
     .warning { color: orange; }
     .info { color: blue; }
+    
+    .contract-settings {
+      margin: 20px 0;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+    
+    .form-group {
+      margin-bottom: 10px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      background-color: white;
+    }
+    
+    button {
+      padding: 8px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
   </style>
 </head>
 <body>
   <div id="statusMessage"></div>
+  
+  <!-- Contract Settings -->
+  <div class="contract-settings">
+    <h3>Contract Settings</h3>
+    
+    <div class="form-group">
+      <label for="networkSelect">Network:</label>
+      <select id="networkSelect">
+        <option value="default">Default (Current MetaMask Network)</option>
+        <option value="cancun">Cancun Testnet</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="contractAddress">Contract Address:</label>
+      <input type="text" id="contractAddress" placeholder="Enter contract address" value="0xd9145CCE52D386f254917e481eB44e9943F39138">
+    </div>
+    
+    <button id="saveContractSettings">Save Settings</button>
+  </div>
+  
   <div id="txStatus"></div>
   <div id="zombies"></div>
   
@@ -31,6 +100,16 @@
     let cryptoZombies;
     let userAccount;
     let web3;
+    
+    // Default contract settings
+    let contractSettings = {
+      address: "0xd9145CCE52D386f254917e481eB44e9943F39138",
+      network: "default"
+    };
+    
+    // Cancun testnet configuration
+    const CANCUN_CHAIN_ID = "Noble-Thepunisher"; // 11155111 in hex (Sepolia testnet as a placeholder for Cancun)
+    const CANCUN_RPC_URL = "https://rpc.buildbear.io/noble-thepunisher-6d148851"; // Using Sepolia as placeholder
 
     /** Display status messages to the user */
     function showStatus(message, type = 'info') {
@@ -171,6 +250,83 @@
             return false;
         }
     }
+    
+    /** Save contract settings */
+    document.getElementById("saveContractSettings").addEventListener("click", async () => {
+        const address = document.getElementById("contractAddress").value.trim();
+        const network = document.getElementById("networkSelect").value;
+        
+        if (!address) {
+            showStatus("Please enter a valid contract address", "error");
+            return;
+        }
+        
+        contractSettings = {
+            address: address,
+            network: network
+        };
+        
+        showStatus(`Contract settings saved. Address: ${address}, Network: ${network}`, "success");
+        
+        // If already connected, reinitialize with new settings
+        if (web3 && userAccount) {
+            // If network changed to Cancun, switch networks first
+            if (network === "cancun") {
+                await switchToCancunNetwork();
+            }
+            startApp();
+        }
+    });
+    
+    /** Switch to Cancun testnet */
+    async function switchToCancunNetwork() {
+        if (!window.ethereum) {
+            showStatus("MetaMask not detected", "error");
+            return false;
+        }
+        
+        try {
+            // Try to switch to the Cancun network
+            await window.ethereum.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId: CANCUN_CHAIN_ID }],
+            });
+            showStatus("Switched to Cancun testnet", "success");
+            return true;
+        } catch (switchError) {
+            // This error code indicates that the chain has not been added to MetaMask
+            if (switchError.code === 4902) {
+                try {
+                    await window.ethereum.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [
+                            {
+                                chainId: CANCUN_CHAIN_ID,
+                                chainName: 'Sepolia Testnet',
+                                nativeCurrency: {
+                                    name: 'Sepolia ETH',
+                                    symbol: 'ETH',
+                                    decimals: 18
+                                },
+                                rpcUrls: [CANCUN_RPC_URL],
+                                blockExplorerUrls: ['https://sepolia.etherscan.io/'],
+                            },
+                        ],
+                    });
+                    showStatus("Added and switched to Cancun testnet", "success");
+                    return true;
+                } catch (addError) {
+                    showStatus(`Error adding Cancun network: ${addError.message}`, "error");
+                    console.error("Error adding network:", addError);
+                    return false;
+                }
+            } else {
+                showStatus(`Error switching network: ${switchError.message}`, "error");
+                console.error("Error switching network:", switchError);
+                return false;
+            }
+        }
+    }
 
     /** Handles MetaMask connection request */
     document.getElementById("connectButton").addEventListener("click", async () => {
@@ -179,6 +335,10 @@
             if (hasMetaMask) {
                 const connected = await initializeWeb3();
                 if (connected) {
+                    // If Cancun network is selected, ensure we're on the right network
+                    if (contractSettings.network === "cancun") {
+                        await switchToCancunNetwork();
+                    }
                     startApp();
                 }
             } else {
@@ -195,8 +355,6 @@
         try {
             console.log("Starting App...");
             showStatus("Initializing CryptoZombies contract...", "info");
-
-            const cryptoZombiesAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
             
             // Verify we have web3 and the ABI before proceeding
             if (!web3) {
@@ -210,10 +368,22 @@
                 return;
             }
             
-            // Initialize the contract
+            // If Cancun network is selected, ensure we're on the right network
+            if (contractSettings.network === "cancun") {
+                const chainId = await web3.eth.getChainId();
+                const cancunChainIdDecimal = parseInt(CANCUN_CHAIN_ID, 16);
+                
+                if (chainId !== cancunChainIdDecimal) {
+                    showStatus("Please switch to Cancun testnet in MetaMask", "warning");
+                    const switched = await switchToCancunNetwork();
+                    if (!switched) return;
+                }
+            }
+            
+            // Initialize the contract with the current settings
             try {
-                cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
-                showStatus("Contract initialized successfully", "success");
+                cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, contractSettings.address);
+                showStatus(`Contract initialized successfully at ${contractSettings.address}`, "success");
             } catch (error) {
                 showStatus(`Failed to initialize contract: ${error.message}`, "error");
                 console.error("Contract initialization error:", error);
