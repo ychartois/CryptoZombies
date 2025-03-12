@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MetaMask Connection Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    #status {
+      margin: 20px 0;
+      padding: 15px;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+    }
+    .error { color: red; background-color: #ffeeee; }
+    .success { color: green; background-color: #eeffee; }
+    .warning { color: orange; background-color: #ffffee; }
+    .info { color: blue; background-color: #eeeeff; }
+    button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    pre {
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    .log-entry {
+      margin: 5px 0;
+      padding: 5px;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <h1>MetaMask Connection Test</h1>
+  
+  <div id="status" class="info">Initializing...</div>
+  
+  <button id="checkButton">Check MetaMask</button>
+  <button id="connectButton">Connect to MetaMask</button>
+  
+  <h2>Environment Details</h2>
+  <pre id="envDetails"></pre>
+  
+  <h2>Console Log</h2>
+  <div id="consoleLog"></div>
+
+  <script>
+    // Override console.log to display in the page
+    const originalConsoleLog = console.log;
+    const originalConsoleWarn = console.warn;
+    const originalConsoleError = console.error;
+    
+    console.log = function() {
+      originalConsoleLog.apply(console, arguments);
+      logToPage('LOG', arguments);
+    };
+    
+    console.warn = function() {
+      originalConsoleWarn.apply(console, arguments);
+      logToPage('WARN', arguments);
+    };
+    
+    console.error = function() {
+      originalConsoleError.apply(console, arguments);
+      logToPage('ERROR', arguments);
+    };
+    
+    function logToPage(type, args) {
+      const logDiv = document.getElementById('consoleLog');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      
+      const timestamp = new Date().toLocaleTimeString();
+      let message = '';
+      
+      for (let i = 0; i < args.length; i++) {
+        if (typeof args[i] === 'object') {
+          message += JSON.stringify(args[i], null, 2) + ' ';
+        } else {
+          message += args[i] + ' ';
+        }
+      }
+      
+      entry.innerHTML = `<strong>[${timestamp}] [${type}]:</strong> ${message}`;
+      logDiv.insertBefore(entry, logDiv.firstChild);
+    }
+    
+    // Show status messages
+    function showStatus(message, type = 'info') {
+      const statusDiv = document.getElementById('status');
+      statusDiv.textContent = message;
+      statusDiv.className = type;
+      console.log(`[${type.toUpperCase()}] ${message}`);
+    }
+    
+    // Check if we're running in a secure context
+    function isSecureContext() {
+      return window.location.protocol === 'https:' || 
+             window.location.hostname === 'localhost' || 
+             window.location.hostname === '127.0.0.1';
+    }
+    
+    // Display environment details
+    function showEnvironmentDetails() {
+      const details = {
+        userAgent: navigator.userAgent,
+        windowEthereum: typeof window.ethereum !== 'undefined',
+        windowWeb3: typeof window.web3 !== 'undefined',
+        secureContext: isSecureContext(),
+        protocol: window.location.protocol,
+        hostname: window.location.hostname
+      };
+      
+      if (typeof window.ethereum !== 'undefined') {
+        details.ethereumIsMetaMask = window.ethereum.isMetaMask;
+        details.ethereumSelectedAddress = window.ethereum.selectedAddress;
+        details.ethereumChainId = window.ethereum.chainId;
+      }
+      
+      document.getElementById('envDetails').textContent = JSON.stringify(details, null, 2);
+      console.log("Environment details:", details);
+    }
+    
+    // Check for MetaMask
+    async function checkMetaMask() {
+      showStatus("Checking for MetaMask...", "info");
+      showEnvironmentDetails();
+      
+      // Check for secure context
+      if (!isSecureContext()) {
+        showStatus("⚠️ Not running in a secure context. MetaMask may not inject properly.", "warning");
+      }
+      
+      // Check for MetaMask or other injected providers
+      if (typeof window.ethereum !== 'undefined') {
+        if (window.ethereum.isMetaMask) {
+          showStatus("✅ MetaMask detected!", "success");
+        } else {
+          showStatus("⚠️ Ethereum provider detected, but it's not MetaMask.", "warning");
+        }
+        return true;
+      } 
+      
+      // Legacy fallback for older MetaMask versions
+      if (typeof window.web3 !== 'undefined') {
+        showStatus("⚠️ Legacy Web3 detected. This is an older version of MetaMask.", "warning");
+        return true;
+      }
+      
+      showStatus("❌ MetaMask not detected. Please install MetaMask extension.", "error");
+      return false;
+    }
+    
+    // Connect to MetaMask
+    async function connectToMetaMask() {
+      try {
+        showStatus("Requesting account access...", "info");
+        
+        if (typeof window.ethereum !== 'undefined') {
+          // Request account access
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          
+          if (accounts.length > 0) {
+            showStatus(`🎉 Connected to account: ${accounts[0]}`, "success");
+            showEnvironmentDetails(); // Refresh environment details
+          } else {
+            showStatus("No accounts found. Please unlock MetaMask.", "error");
+          }
+        } else if (typeof window.web3 !== 'undefined') {
+          // Legacy Web3
+          window.web3.eth.getAccounts((error, accounts) => {
+            if (error) {
+              showStatus(`Error getting accounts: ${error.message}`, "error");
+            } else if (accounts.length > 0) {
+              showStatus(`🎉 Connected to account: ${accounts[0]}`, "success");
+              showEnvironmentDetails(); // Refresh environment details
+            } else {
+              showStatus("No accounts found. Please unlock MetaMask.", "error");
+            }
+          });
+        } else {
+          showStatus("MetaMask not detected. Please install MetaMask extension.", "error");
+        }
+      } catch (error) {
+        showStatus(`Connection error: ${error.message}`, "error");
+        console.error("Connection error:", error);
+      }
+    }
+    
+    // Set up event listeners
+    document.getElementById('checkButton').addEventListener('click', checkMetaMask);
+    document.getElementById('connectButton').addEventListener('click', connectToMetaMask);
+    
+    // Initialize on page load
+    window.addEventListener('load', async function() {
+      showStatus("Page loaded. Checking for MetaMask...", "info");
+      
+      // Check if document is loaded in an iframe
+      if (window.self !== window.top) {
+        showStatus("⚠️ Page is loaded in an iframe. MetaMask might be restricted.", "warning");
+      }
+      
+      await checkMetaMask();
+      
+      // Set up event listeners for MetaMask events
+      if (typeof window.ethereum !== 'undefined') {
+        ethereum.on('accountsChanged', (accounts) => {
+          console.log("Accounts changed:", accounts);
+          if (accounts.length === 0) {
+            showStatus("MetaMask is locked or no accounts are available", "warning");
+          } else {
+            showStatus(`Account changed to: ${accounts[0]}`, "info");
+          }
+          showEnvironmentDetails(); // Refresh environment details
+        });
+        
+        ethereum.on('chainChanged', (chainId) => {
+          console.log("Network changed:", chainId);
+          showStatus(`Network changed to chain ID: ${chainId}`, "info");
+          showEnvironmentDetails(); // Refresh environment details
+        });
+        
+        ethereum.on('disconnect', (error) => {
+          console.log("MetaMask disconnected:", error);
+          showStatus("MetaMask disconnected", "warning");
+        });
+      }
+    });
+  </script>
+</body>
+</html>

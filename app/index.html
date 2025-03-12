@@ -4,10 +4,23 @@
   <meta charset="UTF-8">
   <title>CryptoZombies front-end</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
   <script src="cryptozombies_abi.js"></script>
+  <style>
+    #statusMessage {
+      margin: 20px 0;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #f8f9fa;
+    }
+    .error { color: red; }
+    .success { color: green; }
+    .warning { color: orange; }
+    .info { color: blue; }
+  </style>
 </head>
 <body>
+  <div id="statusMessage"></div>
   <div id="txStatus"></div>
   <div id="zombies"></div>
   
@@ -19,64 +32,210 @@
     let userAccount;
     let web3;
 
+    /** Display status messages to the user */
+    function showStatus(message, type = 'info') {
+        const statusDiv = document.getElementById('statusMessage');
+        statusDiv.textContent = message;
+        statusDiv.className = type;
+        console.log(`[${type.toUpperCase()}] ${message}`);
+    }
+
+    /** Check if we're running in a secure context */
+    function isSecureContext() {
+        return window.location.protocol === 'https:' || 
+               window.location.hostname === 'localhost' || 
+               window.location.hostname === '127.0.0.1';
+    }
+
     /** Detects and waits for MetaMask */
     async function waitForMetaMask() {
-        console.log("Waiting for MetaMask...");
-        let attempts = 0;
+        showStatus("Checking for MetaMask...", "info");
         
-        const checkMetaMask = setInterval(() => {
-            if (typeof window.ethereum !== 'undefined') {
-                console.log("✅ MetaMask detected!");
-                clearInterval(checkMetaMask);
-                initializeWeb3(); // Initialize Web3 once MetaMask loads
-            } else {
-                console.warn("🚨 MetaMask not found. Attempt:", ++attempts);
-            }
+        // Log environment details for debugging
+        console.log("Environment check:", {
+            windowEthereum: typeof window.ethereum !== 'undefined',
+            windowWeb3: typeof window.web3 !== 'undefined',
+            secureContext: isSecureContext(),
+            userAgent: navigator.userAgent
+        });
+        
+        // Check for secure context
+        if (!isSecureContext()) {
+            showStatus("⚠️ Not running in a secure context. MetaMask may not inject properly.", "warning");
+        }
+        
+        // Check for MetaMask or other injected providers
+        if (typeof window.ethereum !== 'undefined') {
+            showStatus("✅ MetaMask detected!", "success");
+            return true;
+        } 
+        
+        // Legacy fallback for older MetaMask versions
+        if (typeof window.web3 !== 'undefined') {
+            showStatus("⚠️ Legacy Web3 detected. Using older connection method.", "warning");
+            window.ethereum = window.web3.currentProvider;
+            return true;
+        }
+        
+        // If not immediately available, wait for it
+        return new Promise((resolve) => {
+            let attempts = 0;
+            const maxAttempts = 20; // 10 seconds (20 * 500ms)
             
-            if (attempts > 10) { // Stop after 10 attempts (~5 seconds)
-                clearInterval(checkMetaMask);
-                alert("❌ MetaMask not detected. Please install MetaMask and reload.");
-            }
-        }, 500);
+            showStatus("Waiting for MetaMask to initialize...", "info");
+            
+            const checkMetaMask = setInterval(() => {
+                attempts++;
+                console.log(`Checking for MetaMask (attempt ${attempts}/${maxAttempts})...`);
+                
+                // Check for modern MetaMask
+                if (typeof window.ethereum !== 'undefined') {
+                    clearInterval(checkMetaMask);
+                    showStatus("✅ MetaMask detected!", "success");
+                    resolve(true);
+                    return;
+                }
+                
+                // Check for legacy MetaMask
+                if (typeof window.web3 !== 'undefined') {
+                    clearInterval(checkMetaMask);
+                    showStatus("⚠️ Legacy Web3 detected. Using older connection method.", "warning");
+                    window.ethereum = window.web3.currentProvider;
+                    resolve(true);
+                    return;
+                }
+                
+                if (attempts >= maxAttempts) {
+                    clearInterval(checkMetaMask);
+                    showStatus("❌ MetaMask not detected after multiple attempts. Please install MetaMask and reload.", "error");
+                    resolve(false);
+                }
+            }, 500);
+        });
     }
 
     /** Initialize Web3 and request account access */
     async function initializeWeb3() {
-        if (typeof window.ethereum !== 'undefined') {
-            try {
-                web3 = new Web3(window.ethereum);
-                await window.ethereum.request({ method: 'eth_requestAccounts' });
-                const accounts = await web3.eth.getAccounts();
-                userAccount = accounts[0];
-                console.log("🎉 Connected account:", userAccount);
-                startApp();
-            } catch (error) {
-                console.error("⚠️ MetaMask connection failed", error);
+        try {
+            // Check if MetaMask is available
+            const hasProvider = typeof window.ethereum !== 'undefined' || typeof window.web3 !== 'undefined';
+            
+            if (!hasProvider) {
+                showStatus("MetaMask not detected. Please install MetaMask extension.", "error");
+                return false;
             }
-        } else {
-            console.error("❌ MetaMask not detected!");
-            alert("Please install MetaMask to use this dApp.");
+            
+            // Initialize Web3 with the appropriate provider
+            if (typeof window.ethereum !== 'undefined') {
+                console.log("Using modern ethereum provider");
+                web3 = new Web3(window.ethereum);
+                
+                try {
+                    // Request account access
+                    showStatus("Requesting account access...", "info");
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                } catch (error) {
+                    showStatus(`User denied account access: ${error.message}`, "error");
+                    console.error("Account access denied:", error);
+                    return false;
+                }
+            } else if (typeof window.web3 !== 'undefined') {
+                // Legacy Web3
+                console.log("Using legacy web3 provider");
+                web3 = new Web3(window.web3.currentProvider);
+            } else {
+                showStatus("No Web3 provider detected", "error");
+                return false;
+            }
+            
+            // Get accounts
+            try {
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length === 0) {
+                    showStatus("No accounts found. Please unlock MetaMask and reload.", "error");
+                    return false;
+                }
+                
+                userAccount = accounts[0];
+                showStatus(`🎉 Connected to account: ${userAccount}`, "success");
+                console.log("Connected account:", userAccount);
+                return true;
+            } catch (error) {
+                showStatus(`Failed to get accounts: ${error.message}`, "error");
+                console.error("Failed to get accounts:", error);
+                return false;
+            }
+        } catch (error) {
+            showStatus(`Web3 initialization error: ${error.message}`, "error");
+            console.error("Web3 initialization error:", error);
+            return false;
         }
     }
 
     /** Handles MetaMask connection request */
     document.getElementById("connectButton").addEventListener("click", async () => {
         try {
-            await initializeWeb3();
+            const hasMetaMask = await waitForMetaMask();
+            if (hasMetaMask) {
+                const connected = await initializeWeb3();
+                if (connected) {
+                    startApp();
+                }
+            } else {
+                showStatus("Please install MetaMask to use this dApp: https://metamask.io/download/", "error");
+            }
         } catch (error) {
-            console.error("User denied MetaMask connection", error);
+            showStatus(`Connection error: ${error.message}`, "error");
+            console.error("Connection error:", error);
         }
     });
 
     /** Core CryptoZombies Logic */
     async function startApp() {
-        console.log("Starting App...");
+        try {
+            console.log("Starting App...");
+            showStatus("Initializing CryptoZombies contract...", "info");
 
-        const cryptoZombiesAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
-        cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+            const cryptoZombiesAddress = "0xd9145CCE52D386f254917e481eB44e9943F39138";
+            
+            // Verify we have web3 and the ABI before proceeding
+            if (!web3) {
+                showStatus("Web3 not initialized", "error");
+                return;
+            }
+            
+            if (typeof cryptoZombiesABI === 'undefined') {
+                showStatus("Contract ABI not found", "error");
+                console.error("cryptoZombiesABI is undefined. Check if cryptozombies_abi.js is loaded correctly.");
+                return;
+            }
+            
+            // Initialize the contract
+            try {
+                cryptoZombies = new web3.eth.Contract(cryptoZombiesABI, cryptoZombiesAddress);
+                showStatus("Contract initialized successfully", "success");
+            } catch (error) {
+                showStatus(`Failed to initialize contract: ${error.message}`, "error");
+                console.error("Contract initialization error:", error);
+                return;
+            }
 
-        updateAccount();
-        subscribeToEvents();
+            updateAccount();
+            subscribeToEvents();
+            
+            // Try to get zombies for the current account
+            try {
+                const zombies = await getZombiesByOwner(userAccount);
+                displayZombies(zombies);
+                showStatus(`Found ${zombies.length} zombies for your account`, "success");
+            } catch (error) {
+                showStatus(`Error loading zombies: ${error.message}`, "error");
+                console.error("Error loading zombies:", error);
+            }
+        } catch (error) {
+            showStatus(`Error starting app: ${error.message}`, "error");
+            console.error("Error starting app:", error);
+        }
     }
 
     async function updateAccount() {
@@ -173,9 +332,43 @@
 
     /** Detect MetaMask on page load */
     window.addEventListener('load', async function () {
-        await waitForMetaMask();
-        if (typeof window.ethereum !== 'undefined') {
-            ethereum.on('accountsChanged', updateAccount);
+        showStatus("Page loaded. Waiting for MetaMask...", "info");
+        
+        // Check if document is loaded in an iframe
+        if (window.self !== window.top) {
+            showStatus("⚠️ Page is loaded in an iframe. MetaMask might be restricted.", "warning");
+        }
+        
+        // Try to detect MetaMask
+        const hasMetaMask = await waitForMetaMask();
+        
+        if (hasMetaMask) {
+            showStatus("MetaMask detected. Click 'Connect to MetaMask' to start.", "success");
+            
+            // Set up event listeners for account changes
+            if (typeof window.ethereum !== 'undefined') {
+                ethereum.on('accountsChanged', (accounts) => {
+                    console.log("Accounts changed:", accounts);
+                    if (accounts.length === 0) {
+                        showStatus("MetaMask is locked or no accounts are available", "warning");
+                    } else {
+                        updateAccount();
+                    }
+                });
+                
+                ethereum.on('chainChanged', (chainId) => {
+                    console.log("Network changed:", chainId);
+                    showStatus("Network changed. Reloading...", "info");
+                    window.location.reload();
+                });
+                
+                ethereum.on('disconnect', (error) => {
+                    console.log("MetaMask disconnected:", error);
+                    showStatus("MetaMask disconnected", "warning");
+                });
+            }
+        } else {
+            showStatus("MetaMask not detected. Please install MetaMask to use this dApp: https://metamask.io/download/", "error");
         }
     });
 
